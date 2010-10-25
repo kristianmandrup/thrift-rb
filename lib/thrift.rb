@@ -33,7 +33,6 @@ require 'thrift/serializer/deserializer'
 # protocol
 require 'thrift/protocol/base_protocol'
 require 'thrift/protocol/binary_protocol'
-require 'thrift/protocol/binary_protocol_accelerated'
 require 'thrift/protocol/compact_protocol'
 
 # transport
@@ -56,4 +55,3 @@ require 'thrift/server/simple_server'
 require 'thrift/server/threaded_server'
 require 'thrift/server/thread_pool_server'
 
-require 'thrift/thrift_native'
