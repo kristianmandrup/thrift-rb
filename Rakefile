@@ -19,7 +19,7 @@
 
 require 'rubygems'
 require 'rake'
-require 'spec/rake/spectask'
+# require 'spec/rake/spectask'
 
 THRIFT = '../../compiler/cpp/thrift'
 
@@ -27,25 +27,25 @@ task :default => [:spec]
 
 task :spec => [:'gen-rb', :realspec]
 
-Spec::Rake::SpecTask.new(:realspec) do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.spec_opts = ['--color']
-end
-
-Spec::Rake::SpecTask.new(:'spec:rcov') do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.spec_opts = ['--color']
-  t.rcov = true
-  t.rcov_opts = ['--exclude', '^spec,/gems/']
-end
-
-desc 'Run the compiler tests (requires full thrift checkout)'
+# Spec::Rake::SpecTask.new(:realspec) do |t|
+#   t.spec_files = FileList['spec/**/*_spec.rb']
+#   t.spec_opts = ['--color']
+# end
+# 
+# Spec::Rake::SpecTask.new(:'spec:rcov') do |t|
+#   t.spec_files = FileList['spec/**/*_spec.rb']
+#   t.spec_opts = ['--color']
+#   t.rcov = true
+#   t.rcov_opts = ['--exclude', '^spec,/gems/']
+# end
+# 
+# desc 'Run the compiler tests (requires full thrift checkout)'
 task :test do
   # ensure this is a full thrift checkout and not a tarball of the ruby libs
   cmd = 'head -1 ../../README 2>/dev/null | grep Thrift >/dev/null 2>/dev/null'
   system(cmd) or fail "rake test requires a full thrift checkout"
   sh 'make', '-C', File.dirname(__FILE__) + "/../../test/rb", "check"
-end
+end        
 
 desc 'Compile the .thrift files for the specs'
 task :'gen-rb' => [:'gen-rb:spec', :'gen-rb:benchmark', :'gen-rb:debug_proto']
@@ -77,9 +77,11 @@ begin
   require 'echoe'
 
   Echoe.new('thrift') do |p|
-    p.author = ['Kevin Ballard', 'Kevin Clark', 'Mark Slee', 'Evan Weaver']
+    p.author = ['Kevin Ballard', 'Kevin Clark', 'Mark Slee', 'Evan Weaver', 'Jeff Hodges', 'Kristian Mandrup']
     p.project = "fauna"
+    p.email =   "kmandrup@gmail.com"
     p.summary = "Ruby libraries for Thrift (a language-agnostic RPC system)"
+    p.description = "Ruby libraries for Thrift with no native extensions"
     p.include_rakefile = true
     p.url = "http://blog.evanweaver.com/files/doc/fauna/thrift/"
     p.docs_host = "blog.evanweaver.com:~/www/bax/public/files/doc/"
